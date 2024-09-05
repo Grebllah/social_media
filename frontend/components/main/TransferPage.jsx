@@ -8,6 +8,10 @@ function TransferPage(props) {
             <Card>
                 <Card.Body>
                     <TransferForm/>
+                    <Button
+                     onClick={props.sendTransaction}
+                    >Transfer Now
+                    </Button>
                 </Card.Body>
             </Card>
         </>
@@ -38,7 +42,6 @@ function TransferForm() {
                         <Form.Control/>
                     </Form.Group>
                 </Card.Body>
-                <Button>Transfer now</Button>
             </Card>
         </>
     )

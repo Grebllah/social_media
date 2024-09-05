@@ -8,13 +8,17 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [data, setData] = useState("")
-  const [route, setRoute] = useState({
-    route: 'overview'
+  const [data, setData] = useState('')
+  const [route, setRoute] = useState('overview')
+  const [username, setUsername] = useState('')
+  const [txDetails, setTxDetails] = useState({
+    txToAccount: '',
+    txAmount: 0,
+    txCurrency: ''
   })
+
   const fetchAPI = async () => {
-    const response = await axios.get('http://localhost:5555/api/data')
+    const response = await axios.get('http://localhost:5555')
     console.log(response.data)
   }
   useEffect(() => {
@@ -23,6 +27,21 @@ function App() {
 
   const onRouteChange = (dest) => {
     setRoute({route: dest})
+  }
+
+  const sendTransaction = async() => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+      'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        txDetails: txDetails
+      })
+    }
+      let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
+      let message = response['message']
   }
 
   return (
@@ -35,7 +54,10 @@ function App() {
       ?
         <Overview onRouteChange={onRouteChange}/>
       :
-        <TransferPage onRouteChange={onRouteChange}/>
+        <TransferPage
+          onRouteChange={onRouteChange}
+          sendTransaction={sendTransaction}  
+        />
       }
     </div>
   )
