@@ -11,3 +11,6 @@ def db_query(
     if query == None:
         return False, query
     else: return True, query
+
+def gen_result_dictionary(**kwargs):
+    return kwargs
