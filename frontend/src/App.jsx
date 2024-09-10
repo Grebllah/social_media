@@ -20,12 +20,9 @@ function App() {
   }
 
   const onFormTextChange = (key, value) => {
-    console.log(key, value)
     setTxDetails(
         {...txDetails, [key]: value}
     )
-    
-    console.log(txDetails)
   }
 
   const sendTransaction = async() => {
@@ -50,7 +47,7 @@ function App() {
       onRouteChange={onRouteChange}
       />
       <h1>The Bank</h1>
-      {route.route === 'overview'
+      {route === 'overview'
       ?
         <Overview onRouteChange={onRouteChange}/>
       :

@@ -44,11 +44,11 @@ def add_tx_to_db(
     db.session.commit()
 
 def transaction_validator(username, transaction_details):
-    to_account, from_account, currency = transaction_details.values()
+    to_account, amount, currency = transaction_details.values()
     try:
         amount = int(amount)
     except:
-        return False, "Invalid Amount"
+        return False, f"Invalid Amount"
     user_sender = db_query(
         User, 'username', username
     )[1]
@@ -60,7 +60,7 @@ def transaction_validator(username, transaction_details):
         return False, "Account does not exist."
     elif to_account == user_sender.account_number:
         return False, "Receiving account cannot be the same as sending account."
-    elif amount == '' or int(amount) == 0:
+    if amount == '' or int(amount) == 0:
         return False, "Amount must be greater than 0."
     elif amount > user_sender.balance:
         return False, "Insufficient Funds."
