@@ -43,7 +43,7 @@ def add_tx_to_db(
     )
     db.session.commit()
 
-def transaction_validator(username ,transaction_details):
+def transaction_validator(username, transaction_details):
     to_account, from_account, currency = transaction_details.values()
     try:
         amount = int(amount)

@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react'
 import './App.css'
-import axios from 'axios'
 import Overview from '../components/main/Overview'
 import TransferPage from '../components/main/TransferPage'
 import Navigation from '../components/navigation/Navigation'
@@ -8,7 +7,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 
 function App() {
-  const [data, setData] = useState('')
   const [route, setRoute] = useState('overview')
   const [username, setUsername] = useState('')
   const [txDetails, setTxDetails] = useState({
@@ -17,16 +15,17 @@ function App() {
     txCurrency: ''
   })
 
-  const fetchAPI = async () => {
-    const response = await axios.get('http://localhost:5555')
-    console.log(response.data)
-  }
-  useEffect(() => {
-    fetchAPI()
-  }, [])
-
   const onRouteChange = (dest) => {
-    setRoute({route: dest})
+    setRoute(dest)
+  }
+
+  const onFormTextChange = (key, value) => {
+    console.log(key, value)
+    setTxDetails(
+        {...txDetails, [key]: value}
+    )
+    
+    console.log(txDetails)
   }
 
   const sendTransaction = async() => {
@@ -42,6 +41,7 @@ function App() {
     }
       let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
       let message = response['message']
+      alert(message)
   }
 
   return (
@@ -56,7 +56,9 @@ function App() {
       :
         <TransferPage
           onRouteChange={onRouteChange}
-          sendTransaction={sendTransaction}  
+          sendTransaction={sendTransaction}
+          onFormTextChange={onFormTextChange}
+          txDetails={txDetails}
         />
       }
     </div>
