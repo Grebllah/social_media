@@ -33,15 +33,9 @@ function AccountInformation() {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                James
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                $69.00
-                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </ Table>
@@ -68,12 +62,12 @@ function TransactionTable() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>001</td>
-                                <td>1234567890</td>
-                                <td>0987654321</td>
-                                <td>100</td>
-                                <td>dollars</td>
-                                <td>01-01-2001</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </Table>

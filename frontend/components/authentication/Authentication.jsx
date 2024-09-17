@@ -12,6 +12,7 @@ function Authentication(props) {
                     authRoute={authRoute}
                     setAuthRoute={setAuthRoute}
                     onLoginFormTextChange={props.onLoginFormTextChange}
+                    loginDetails={props.loginDetails}
                 />
             : authRoute === "register"
             ?
@@ -19,6 +20,7 @@ function Authentication(props) {
                     authRoute={authRoute}
                     setAuthRoute={setAuthRoute}
                     onRegFormTextChange={props.onRegFormTextChange}
+                    regDetails={props.regDetails}
                 />
             :
             <></>
@@ -47,7 +49,12 @@ function Login(props) {
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
-                    <Button>Login</Button>
+                    <Button
+                    onClick={
+                        ()=>{
+                            console.log(props.loginDetails)
+                        }
+                    }>Login</Button>
                     <Button
                     onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
                 </Card.Body>
@@ -89,7 +96,12 @@ function Register(props) {
                             props.setAuthRoute('login')
                         }
                     }>Cancel</Button>
-                    <Button>Create Account</Button>
+                    <Button
+                    onClick={
+                        ()=>{
+                            console.log(props.regDetails)
+                        }
+                    }>Create Account</Button>
                 </Card.Body>
             </Card>
         </>

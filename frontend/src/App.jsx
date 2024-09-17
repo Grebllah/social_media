@@ -20,7 +20,6 @@ function App() {
   })
 
   const [loginDetails, setLoginDetails] = useState({
-    email: '',
     username: '',
     password: ''
   })
@@ -85,12 +84,15 @@ function App() {
           sendTransaction={sendTransaction}
           onTxFormTextChange={onTxFormTextChange}
           txDetails={txDetails}
+          loginDetails={loginDetails}
         />
       : route === 'authentication'
       ?
         <Authentication
         loginDetails={loginDetails}
+        regDetails={regDetails}
         setLoginDetails={setLoginDetails}
+        setRegDetails={setRegDetails}
         onLoginFormTextChange={onLoginFormTextChange}
         onRegFormTextChange={onRegFormTextChange}
         />

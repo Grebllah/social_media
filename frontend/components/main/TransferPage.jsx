@@ -12,7 +12,8 @@ function TransferPage(props) {
                     />
                     <Button
                     onClick={()=>{
-                        props.sendTransaction(props.txDetails)
+                        console.log(props.loginDetails.username, props.txDetails)
+                        // props.sendTransaction(props.txDetails)
                     }}
                     >Transfer Now
                     </Button>
