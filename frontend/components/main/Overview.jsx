@@ -1,7 +1,4 @@
-import React from 'react'
-import { Table, Card, Button } from 'react-bootstrap'
-import TransferPage from './TransferPage'
-import Navigation from '../navigation/Navigation'
+import { Table, Card } from 'react-bootstrap'
 
 function Overview(props) {
     return (

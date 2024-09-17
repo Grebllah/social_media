@@ -1,13 +1,14 @@
-import { React, useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Overview from '../components/main/Overview'
 import TransferPage from '../components/main/TransferPage'
 import Navigation from '../components/navigation/Navigation'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Authentication from '../components/authentication/Authentication'
 
 
 function App() {
-  const [route, setRoute] = useState('overview')
+  const [route, setRoute] = useState('authentication')
   const [username, setUsername] = useState('')
   const [txDetails, setTxDetails] = useState({
     txToAccount: '',
@@ -50,13 +51,19 @@ function App() {
       {route === 'overview'
       ?
         <Overview onRouteChange={onRouteChange}/>
-      :
+      : route === 'transfer'
+      ?
         <TransferPage
           onRouteChange={onRouteChange}
           sendTransaction={sendTransaction}
           onFormTextChange={onFormTextChange}
           txDetails={txDetails}
         />
+      : route === 'authentication'
+      ?
+        <Authentication/>
+      :
+      <></>
       }
     </div>
   )

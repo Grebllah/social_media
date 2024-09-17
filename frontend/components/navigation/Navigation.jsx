@@ -1,4 +1,3 @@
-import React, {Component} from "react"
 import { Button, Navbar } from 'react-bootstrap'
 
 function Navigation(props) {
@@ -9,16 +8,23 @@ function Navigation(props) {
                 onClick={
                     ()=>{
                         props.onRouteChange('overview')
-                        }}>
-                    Overview
+                        }
+                }> Overview
                 </Button>
                 <Button
                 onClick={
                     ()=>{
                         props.onRouteChange('transfer')
-                        }}>
-                    Transfer
-                </Button> 
+                        }
+                }> Transfer
+                </Button>
+                <Button
+                onClick={
+                    ()=>{
+                        props.onRouteChange('authentication')
+                    }
+                }> Login
+                </Button>
             </Navbar>
         </>
     )

@@ -1,0 +1,14 @@
+.form-control {
+    width: 240px;
+    margin: auto;
+}
+
+.auth {
+    width: 32rem;
+    background-color:whitesmoke
+}
+
+button {
+    width: fit-content;
+    margin: 3px;
+}

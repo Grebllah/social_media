@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Card, Form, Button, Nav } from "react-bootstrap";
-import Navigation from "../navigation/Navigation";
+import { Card, Form, Button } from "react-bootstrap";
+import './Main.css'
 
 function TransferPage(props) {
     return (
@@ -13,7 +12,6 @@ function TransferPage(props) {
                     />
                     <Button
                     onClick={()=>{
-                        console.log(props.txDetails)
                         props.sendTransaction(props.txDetails)
                     }}
                     >Transfer Now
@@ -27,7 +25,7 @@ function TransferPage(props) {
 function TransferForm(props) {
     return (
         <>
-            <Card>
+            <Card id="transfer">
                 <Card.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>
