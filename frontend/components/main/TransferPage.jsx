@@ -7,7 +7,7 @@ function TransferPage(props) {
             <Card>
                 <Card.Body>
                     <TransferForm
-                    onFormTextChange={props.onFormTextChange}
+                    onTxFormTextChange={props.onTxFormTextChange}
                     txDetails={props.txDetails}
                     />
                     <Button
@@ -32,21 +32,21 @@ function TransferForm(props) {
                             To Account:
                         </Form.Label>
                         <Form.Control
-                        onChange={(e)=>{props.onFormTextChange("txToAccount", e.target.value)}}/>
+                        onChange={(e)=>{props.onTxFormTextChange("txToAccount", e.target.value)}}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>
                             Amount:
                         </Form.Label>
                         <Form.Control
-                        onChange={(e)=>{props.onFormTextChange("txAmount", e.target.value)}}/>
+                        onChange={(e)=>{props.onTxFormTextChange("txAmount", e.target.value)}}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>
                             Currency:
                         </Form.Label>
                         <Form.Control
-                        onChange={(e)=>{props.onFormTextChange("txCurrency", e.target.value)}}/>
+                        onChange={(e)=>{props.onTxFormTextChange("txCurrency", e.target.value)}}/>
                     </Form.Group>
                 </Card.Body>
             </Card>

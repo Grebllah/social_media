@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import './Authentication.css'
 
-function Authentication() {
+function Authentication(props) {
     const [authRoute, setAuthRoute] = useState('login')
     return (
         <>
@@ -11,12 +11,14 @@ function Authentication() {
                 <Login
                     authRoute={authRoute}
                     setAuthRoute={setAuthRoute}
+                    onLoginFormTextChange={props.onLoginFormTextChange}
                 />
             : authRoute === "register"
             ?
                 <Register
                     authRoute={authRoute}
                     setAuthRoute={setAuthRoute}
+                    onRegFormTextChange={props.onRegFormTextChange}
                 />
             :
             <></>
@@ -32,20 +34,22 @@ function Login(props) {
                 <Card.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control type="username"></Form.Control>
+                        <Form.Control
+                        type="username"
+                        onChange={(e)=>{props.onLoginFormTextChange("username", e.target.value)}}
+                        ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control type="password"></Form.Control>
+                        <Form.Control
+                        type="password"
+                        onChange={(e)=>{props.onLoginFormTextChange("password", e.target.value)}}
+                        ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
                     <Button>Login</Button>
                     <Button
-                    onClick={
-                        ()=>{
-                            props.setAuthRoute('register')
-                        }
-                    }>Register New Account</Button>
+                    onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
                 </Card.Body>
             </Card>
         </>
@@ -59,15 +63,24 @@ function Register(props) {
                 <Card.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>E-mail Address:</Form.Label>
-                        <Form.Control type="email"></Form.Control>
+                        <Form.Control
+                        type="email"
+                        onChange={(e)=>{props.onRegFormTextChange("email", e.target.value)}}
+                        ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control type="username"></Form.Control>
+                        <Form.Control
+                        type="username"
+                        onChange={(e)=>{props.onRegFormTextChange("username", e.target.value)}}
+                        ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control type="password"></Form.Control>
+                        <Form.Control
+                        type="password"
+                        onChange={(e)=>{props.onRegFormTextChange("password", e.target.value)}}
+                        ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
                     <Button

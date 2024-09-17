@@ -8,21 +8,48 @@ import Authentication from '../components/authentication/Authentication'
 
 
 function App() {
+  
   const [route, setRoute] = useState('authentication')
+  
   const [username, setUsername] = useState('')
+  
   const [txDetails, setTxDetails] = useState({
     txToAccount: '',
     txAmount: 0,
     txCurrency: ''
   })
 
+  const [loginDetails, setLoginDetails] = useState({
+    email: '',
+    username: '',
+    password: ''
+  })
+
+  const[regDetails, setRegDetails] = useState({
+    email: '',
+    username: '',
+    password: ''
+  })
+
   const onRouteChange = (dest) => {
     setRoute(dest)
   }
 
-  const onFormTextChange = (key, value) => {
+  const onTxFormTextChange = (key, value) => {
     setTxDetails(
         {...txDetails, [key]: value}
+    )
+  }
+
+  const onLoginFormTextChange = (key, value) => {
+    setLoginDetails(
+        {...loginDetails, [key]: value}
+    )
+  }
+  
+  const onRegFormTextChange = (key, value) => {
+    setRegDetails(
+        {...regDetails, [key]: value}
     )
   }
 
@@ -33,7 +60,7 @@ function App() {
       'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
+        username: loginDetails.username,
         txDetails: txDetails
       })
     }
@@ -56,12 +83,17 @@ function App() {
         <TransferPage
           onRouteChange={onRouteChange}
           sendTransaction={sendTransaction}
-          onFormTextChange={onFormTextChange}
+          onTxFormTextChange={onTxFormTextChange}
           txDetails={txDetails}
         />
       : route === 'authentication'
       ?
-        <Authentication/>
+        <Authentication
+        loginDetails={loginDetails}
+        setLoginDetails={setLoginDetails}
+        onLoginFormTextChange={onLoginFormTextChange}
+        onRegFormTextChange={onRegFormTextChange}
+        />
       :
       <></>
       }
