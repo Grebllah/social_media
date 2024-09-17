@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import './Authentication.css'
 
@@ -32,11 +32,12 @@ function Login(props) {
                 <Card.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control className="username"></Form.Control>
+                        <Form.Control type="username"></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control className="password"></Form.Control>
+                        <Form.Control type="password"></Form.Control>
+                        <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
                     <Button>Login</Button>
                     <Button
@@ -58,15 +59,16 @@ function Register(props) {
                 <Card.Body>
                     <Form.Group className="mb-3">
                         <Form.Label>E-mail Address:</Form.Label>
-                        <Form.Control className="email"></Form.Control>
+                        <Form.Control type="email"></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control className="username"></Form.Control>
+                        <Form.Control type="username"></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control className="password"></Form.Control>
+                        <Form.Control type="password"></Form.Control>
+                        <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
                     <Button
                     onClick={

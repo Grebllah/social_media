@@ -10,5 +10,9 @@
 
 button {
     width: fit-content;
-    margin: 3px;
+    margin: 2.5px;
+}
+
+#showButton {
+    font-size: 7px;
 }
