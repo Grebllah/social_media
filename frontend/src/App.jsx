@@ -10,9 +10,7 @@ import Authentication from '../components/authentication/Authentication'
 function App() {
   
   const [route, setRoute] = useState('authentication')
-  
-  const [username, setUsername] = useState('')
-  
+    
   const [txDetails, setTxDetails] = useState({
     txToAccount: '',
     txAmount: 0,
@@ -32,24 +30,6 @@ function App() {
 
   const onRouteChange = (dest) => {
     setRoute(dest)
-  }
-
-  const onTxFormTextChange = (key, value) => {
-    setTxDetails(
-        {...txDetails, [key]: value}
-    )
-  }
-
-  const onLoginFormTextChange = (key, value) => {
-    setLoginDetails(
-        {...loginDetails, [key]: value}
-    )
-  }
-  
-  const onRegFormTextChange = (key, value) => {
-    setRegDetails(
-        {...regDetails, [key]: value}
-    )
   }
 
   const sendTransaction = async() => {
@@ -82,9 +62,9 @@ function App() {
         <TransferPage
           onRouteChange={onRouteChange}
           sendTransaction={sendTransaction}
-          onTxFormTextChange={onTxFormTextChange}
           txDetails={txDetails}
           loginDetails={loginDetails}
+          setTxDetails={setTxDetails}
         />
       : route === 'authentication'
       ?
@@ -93,8 +73,6 @@ function App() {
         regDetails={regDetails}
         setLoginDetails={setLoginDetails}
         setRegDetails={setRegDetails}
-        onLoginFormTextChange={onLoginFormTextChange}
-        onRegFormTextChange={onRegFormTextChange}
         />
       :
       <></>

@@ -6,25 +6,29 @@ function Authentication(props) {
     const [authRoute, setAuthRoute] = useState('login')
     return (
         <>
-            {authRoute === "login"
-            ?
-                <Login
-                    authRoute={authRoute}
-                    setAuthRoute={setAuthRoute}
-                    onLoginFormTextChange={props.onLoginFormTextChange}
-                    loginDetails={props.loginDetails}
-                />
-            : authRoute === "register"
-            ?
-                <Register
-                    authRoute={authRoute}
-                    setAuthRoute={setAuthRoute}
-                    onRegFormTextChange={props.onRegFormTextChange}
-                    regDetails={props.regDetails}
-                />
-            :
-            <></>
-            }
+            <Card>
+                <Card.Body>
+                    {authRoute === "login"
+                    ?
+                        <Login
+                            authRoute={authRoute}
+                            setAuthRoute={setAuthRoute}
+                            setLoginDetails={props.setLoginDetails}
+                            loginDetails={props.loginDetails}
+                        />
+                    : authRoute === "register"
+                    ?
+                        <Register
+                            authRoute={authRoute}
+                            setAuthRoute={setAuthRoute}
+                            setRegDetails={props.setRegDetails}
+                            regDetails={props.regDetails}
+                        />
+                    :
+                    <></>
+                    }
+                </Card.Body>
+            </Card>
         </>
     )
 }
@@ -38,14 +42,14 @@ function Login(props) {
                         <Form.Label>Username:</Form.Label>
                         <Form.Control
                         type="username"
-                        onChange={(e)=>{props.onLoginFormTextChange("username", e.target.value)}}
+                        onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["username"]: e.target.value})}}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
                         type="password"
-                        onChange={(e)=>{props.onLoginFormTextChange("password", e.target.value)}}
+                        onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["password"]: e.target.value})}}
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
@@ -72,21 +76,21 @@ function Register(props) {
                         <Form.Label>E-mail Address:</Form.Label>
                         <Form.Control
                         type="email"
-                        onChange={(e)=>{props.onRegFormTextChange("email", e.target.value)}}
+                        onChange={(e)=>{props.setRegDetails({...props.regDetails, ["email"]: e.target.value})}}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
                         <Form.Control
                         type="username"
-                        onChange={(e)=>{props.onRegFormTextChange("username", e.target.value)}}
+                        onChange={(e)=>{props.setRegDetails({...props.regDetails, ["username"]: e.target.value})}}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
                         type="password"
-                        onChange={(e)=>{props.onRegFormTextChange("password", e.target.value)}}
+                        onChange={(e)=>{props.setRegDetails({...regDetails, ["password"]: e.target.value})}}
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
