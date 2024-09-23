@@ -50,9 +50,7 @@ function App() {
 
   return (
     <div className='app'>
-      <Navigation
-      onRouteChange={onRouteChange}
-      />
+      <Navigation onRouteChange={onRouteChange}/>
       <h1>The Bank</h1>
       {route === 'overview'
       ?

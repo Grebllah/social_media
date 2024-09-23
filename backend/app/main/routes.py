@@ -68,6 +68,15 @@ def transaction_validator(username, transaction_details):
         return False, "Currency in {} not supported.".format(currency)
     else:
         return True, "Transaction Sent."
+    
+def get_overview(user):
+    return gen_result_dictionary(
+        account_details = gen_result_dictionary(
+            username = user.username,
+            accountNumber = user.account_number,
+            balance = user.balance
+        )
+    )
 
 @app.route('/')
 def main():

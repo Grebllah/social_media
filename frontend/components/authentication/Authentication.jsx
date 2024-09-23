@@ -53,14 +53,8 @@ function Login(props) {
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
-                    <Button
-                    onClick={
-                        ()=>{
-                            console.log(props.loginDetails)
-                        }
-                    }>Login</Button>
-                    <Button
-                    onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
+                    <Button onClick={()=>{console.log(props.loginDetails)}}>Login</Button>
+                    <Button onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
                 </Card.Body>
             </Card>
         </>
@@ -94,18 +88,8 @@ function Register(props) {
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
-                    <Button
-                    onClick={
-                        ()=>{
-                            props.setAuthRoute('login')
-                        }
-                    }>Cancel</Button>
-                    <Button
-                    onClick={
-                        ()=>{
-                            console.log(props.regDetails)
-                        }
-                    }>Create Account</Button>
+                    <Button onClick={()=>{props.setAuthRoute('login')}}>Cancel</Button>
+                    <Button onClick={()=>{console.log(props.regDetails)}}>Create Account</Button>
                 </Card.Body>
             </Card>
         </>

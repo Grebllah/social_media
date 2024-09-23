@@ -1,6 +1,4 @@
-def db_query(
-        db_model, db_col, search_term
-):
+def db_query(db_model, db_col, search_term):
     filters = {db_col: search_term}
     query = (
         db_model

@@ -45,10 +45,8 @@ function TransferForm(props) {
                         onChange={(e)=>{props.setTxDetails({...props.txDetails, ["txCurrency"]: e.target.value})}}/>
                     </Form.Group>
                     <Button
-                    onClick={()=>{
-                        console.log(props.username, props.txDetails)
+                    onClick={()=>{console.log(props.username, props.txDetails)}}
                         // props.sendTransaction(props.txDetails)
-                    }}
                     >Transfer Now
                     </Button>
                 </Card.Body>
