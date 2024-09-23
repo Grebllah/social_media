@@ -15,14 +15,16 @@ function Authentication(props) {
                             setAuthRoute={setAuthRoute}
                             setLoginDetails={props.setLoginDetails}
                             loginDetails={props.loginDetails}
+                            onAuthentication={props.onAuthentication}
                         />
                     : authRoute === "register"
                     ?
                         <Register
                             authRoute={authRoute}
                             setAuthRoute={setAuthRoute}
-                            setRegDetails={props.setRegDetails}
-                            regDetails={props.regDetails}
+                            setLoginDetails={props.setLoginDetails}
+                            loginDetails={props.loginDetails}
+                            onAuthentication={props.onAuthentication}
                         />
                     :
                     <></>
@@ -53,7 +55,11 @@ function Login(props) {
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
-                    <Button onClick={()=>{console.log(props.loginDetails)}}>Login</Button>
+                    <Button onClick={
+                        ()=>{
+                            props.onAuthentication('login')
+                            }
+                        }>Login</Button>
                     <Button onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
                 </Card.Body>
             </Card>
@@ -70,26 +76,26 @@ function Register(props) {
                         <Form.Label>E-mail Address:</Form.Label>
                         <Form.Control
                         type="email"
-                        onChange={(e)=>{props.setRegDetails({...props.regDetails, ["email"]: e.target.value})}}
+                        onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["email"]: e.target.value})}}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Username:</Form.Label>
                         <Form.Control
                         type="username"
-                        onChange={(e)=>{props.setRegDetails({...props.regDetails, ["username"]: e.target.value})}}
+                        onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["username"]: e.target.value})}}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
                         type="password"
-                        onChange={(e)=>{props.setRegDetails({...regDetails, ["password"]: e.target.value})}}
+                        onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["password"]: e.target.value})}}
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
                     <Button onClick={()=>{props.setAuthRoute('login')}}>Cancel</Button>
-                    <Button onClick={()=>{console.log(props.regDetails)}}>Create Account</Button>
+                    <Button onClick={()=>{props.onAuthentication('register')}}>Create Account</Button>
                 </Card.Body>
             </Card>
         </>

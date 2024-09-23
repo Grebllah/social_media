@@ -31,8 +31,8 @@ def add_user_to_db(username, email, password):
 
 @app.route('/register', methods = ["GET", "POST"])
 def register():
-    message = request.get_json()
-    email, username, password = message.values()['loginDetails']
+    message = request.get_json()['loginDetails']
+    email, username, password = message.values()
     user_exists = db_query(User, 'username', username)[0]
     email_exists = db_query(User, 'email', email)[0]
     if user_exists:
@@ -49,16 +49,16 @@ def register():
         new_user = add_user_to_db(
             username, email, password
         )
-    return gen_result_dictionary(
-        success = True,
-        message = "Account registered. Welcome {}".format(username), 
-        result = get_overview(new_user)
-    )
+        return gen_result_dictionary(
+            success = True,
+            message = "Account registered. Welcome {}".format(username), 
+            result = get_overview(new_user)
+        )
 
 @app.route("/login")
 def login():
-    message=request.json()
-    username, password = message.values()['loginDetails']
+    message=request.get_json()['loginDetails']
+    _, username, password = message.values()
     exists, user = db_query(User, 'username', username)
     if exists:
         if user.check_password(password):
@@ -69,12 +69,12 @@ def login():
                 result = result
             )
         else:
-            gen_result_dictionary(
+            return gen_result_dictionary(
                 success = False,
                 message = "Incorrect login information. Please ensure inputted information is correct."
             )
     else:
-        gen_result_dictionary(
+        return gen_result_dictionary(
             success = False,
             message = "Account as written does not exist."
         )

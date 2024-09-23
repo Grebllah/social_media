@@ -18,11 +18,6 @@ function App() {
   })
 
   const [loginDetails, setLoginDetails] = useState({
-    username: '',
-    password: ''
-  })
-
-  const[regDetails, setRegDetails] = useState({
     email: '',
     username: '',
     password: ''
@@ -48,6 +43,25 @@ function App() {
       alert(message)
   }
 
+  const onAuthentication = async(route)=>{
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-type' : "application/json"
+      },
+      body: JSON.stringify({
+          loginDetails: loginDetails
+      })
+    }
+    let response = await (
+      await fetch(
+      'http://127.0.0.1:5555/' + route,
+      requestOptions)
+    ).json()
+    let message = response["message"]
+    alert(message)
+  }
+
   return (
     <div className='app'>
       <Navigation onRouteChange={onRouteChange}/>
@@ -68,9 +82,8 @@ function App() {
       ?
         <Authentication
         loginDetails={loginDetails}
-        regDetails={regDetails}
         setLoginDetails={setLoginDetails}
-        setRegDetails={setRegDetails}
+        onAuthentication={onAuthentication}
         />
       :
       <></>
