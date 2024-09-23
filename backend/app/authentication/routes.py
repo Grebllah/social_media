@@ -1,7 +1,7 @@
 from app import app, db
 from app.utils import *
 from app.authentication.models import User
-from app.authentication.routes import get_overview
+from app.main.routes import get_overview
 from config import Config
 
 from flask import request
@@ -54,3 +54,27 @@ def register():
         message = "Account registered. Welcome {}".format(username), 
         result = get_overview(new_user)
     )
+
+@app.route("/login")
+def login():
+    message=request.json()
+    username, password = message.values()['loginDetails']
+    exists, user = db_query(User, 'username', username)
+    if exists:
+        if user.check_password(password):
+            result = get_overview(user)
+            return gen_result_dictionary(
+                success = True,
+                message = "Login Successful.",
+                result = result
+            )
+        else:
+            gen_result_dictionary(
+                success = False,
+                message = "Incorrect login information. Please ensure inputted information is correct."
+            )
+    else:
+        gen_result_dictionary(
+            success = False,
+            message = "Account as written does not exist."
+        )
