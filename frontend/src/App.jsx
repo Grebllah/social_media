@@ -31,7 +31,7 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: {
-      'Content-type': 'application/json'
+      'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         username: loginDetails.username,

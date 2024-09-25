@@ -33,17 +33,17 @@ def add_user_to_db(username, email, password):
 def register():
     message = request.get_json()['loginDetails']
     email, username, password = message.values()
-    user_exists = db_query(User, 'username', username)[0]
     email_exists = db_query(User, 'email', email)[0]
-    if user_exists:
-        return gen_result_dictionary(
-            success = False,
-            message = "Username already taken. Please Try another username."
-        )
+    user_exists = db_query(User, 'username', username)[0]
     if email_exists:
         return gen_result_dictionary(
             success = False,
             message = "E-mail address already taken. Please Try another E-Mail address."
+        )
+    if user_exists:
+        return gen_result_dictionary(
+            success = False,
+            message = "Username already taken. Please Try another username."
         )
     else:
         new_user = add_user_to_db(
@@ -55,7 +55,7 @@ def register():
             result = get_overview(new_user)
         )
 
-@app.route("/login")
+@app.route("/login", methods = ["GET", "POST"])
 def login():
     message=request.get_json()['loginDetails']
     _, username, password = message.values()
@@ -71,7 +71,7 @@ def login():
         else:
             return gen_result_dictionary(
                 success = False,
-                message = "Incorrect login information. Please ensure inputted information is correct."
+                message = "Incorrect login information. Please ensure inputted information is correct and try again."
             )
     else:
         return gen_result_dictionary(
