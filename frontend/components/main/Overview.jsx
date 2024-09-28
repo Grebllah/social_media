@@ -1,11 +1,12 @@
-import { Table, Card } from 'react-bootstrap'
+import { Table, Card, Button } from 'react-bootstrap'
 
 function Overview(props) {
     return (
         <>
             <Card>
                 <Card.Body>
-                    <AccountInformation/>
+                    <AccountInformation
+                    setRoute={props.setRoute}/>
                     <TransactionTable/>
                 </Card.Body>
             </Card>
@@ -13,7 +14,7 @@ function Overview(props) {
     )
 }
 
-function AccountInformation() {
+function AccountInformation(props) {
     return (
         <Card>
             <Card.Body>
@@ -39,12 +40,14 @@ function AccountInformation() {
                         </tr>
                     </tbody>
                 </ Table>
+                <Button
+                onClick={()=>{props.setRoute("transfer")}}>Transfer Funds</Button>
             </Card.Body>
         </Card>
     )
 }
 
-function TransactionTable() {
+function TransactionTable(props) {
     return (
         <>
             <Card>

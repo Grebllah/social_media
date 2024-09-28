@@ -12,6 +12,13 @@ function TransferPage(props) {
                     loginDetails={props.loginDetails}
                     setTxDetails={props.setTxDetails}
                     />
+                    <Button
+                    onClick={()=>{
+                        console.log(props.txDetails)
+                        props.sendTransaction()
+                    }}
+                    >Transfer Now
+                    </Button>
                 </Card.Body>
             </Card>
         </>
@@ -44,11 +51,6 @@ function TransferForm(props) {
                         <Form.Control
                         onChange={(e)=>{props.setTxDetails({...props.txDetails, ["txCurrency"]: e.target.value})}}/>
                     </Form.Group>
-                    <Button
-                    onClick={()=>{console.log(props.username, props.txDetails)}}
-                        // props.sendTransaction(props.txDetails)
-                    >Transfer Now
-                    </Button>
                 </Card.Body>
             </Card>
         </>

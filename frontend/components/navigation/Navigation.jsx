@@ -5,8 +5,7 @@ function Navigation(props) {
         <>
             <Navbar fixed="top" className="justify-content-end">
                 <Button onClick={()=>{props.onRouteChange('overview')}}> Overview</Button>
-                <Button onClick={()=>{props.onRouteChange('transfer')}}> Transfer</Button>
-                <Button onClick={()=>{props.onRouteChange('authentication')}}> Login</Button>
+                <Button onClick={()=>{props.onRouteChange('authentication')}}> Login / Sign Out</Button>
             </Navbar>
         </>
     )

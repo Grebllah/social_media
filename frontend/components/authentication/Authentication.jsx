@@ -55,11 +55,7 @@ function Login(props) {
                         ></Form.Control>
                         <Button variant='secondary' id='showButton'>Show Password</Button>
                     </Form.Group>
-                    <Button onClick={
-                        ()=>{
-                            props.onAuthentication('login')
-                            }
-                        }>Login</Button>
+                    <Button onClick={()=>{props.onAuthentication('login')}}>Login</Button>
                     <Button onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
                 </Card.Body>
             </Card>

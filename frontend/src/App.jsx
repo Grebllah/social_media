@@ -31,16 +31,17 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: {
-      'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: loginDetails.username,
+        username: loginDetails["username"],
         txDetails: txDetails
       })
     }
-      let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
-      let message = response['message']
-      alert(message)
+    let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
+    console.log(response)
+    let message = response['message']
+    alert(message)
   }
 
   const onAuthentication = async(route)=>{
@@ -58,8 +59,10 @@ function App() {
       'http://127.0.0.1:5555/' + route,
       requestOptions)
     ).json()
-    let message = response["message"]
+    let {success, message, result} = response
     alert(message)
+    if (success)
+      setRoute("overview")
   }
 
   return (
@@ -68,7 +71,9 @@ function App() {
       <h1>The Bank</h1>
       {route === 'overview'
       ?
-        <Overview onRouteChange={onRouteChange}/>
+        <Overview
+        onRouteChange={onRouteChange}
+        setRoute={setRoute}/>
       : route === 'transfer'
       ?
         <TransferPage
