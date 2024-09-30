@@ -23,6 +23,12 @@ function App() {
     password: ''
   })
 
+  const [accDetails, setAccDetails] = useState({
+    username: '',
+    accountNumber: '',
+    balance: 0
+  })
+
   const onRouteChange = (dest) => {
     setRoute(dest)
   }
@@ -31,6 +37,7 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: {
+        "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -63,17 +70,25 @@ function App() {
     alert(message)
     if (success)
       setRoute("overview")
+    setAccDetails(result["account_details"])
   }
 
   return (
     <div className='app'>
-      <Navigation onRouteChange={onRouteChange}/>
+      <Navigation
+      onRouteChange={onRouteChange}
+      loginDetails={loginDetails}
+      setLoginDetails={setLoginDetails}/>
       <h1>The Bank</h1>
       {route === 'overview'
       ?
         <Overview
         onRouteChange={onRouteChange}
-        setRoute={setRoute}/>
+        setRoute={setRoute}
+        accDetails={accDetails}
+        setAccDetails={setAccDetails}
+        />
+
       : route === 'transfer'
       ?
         <TransferPage

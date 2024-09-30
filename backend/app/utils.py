@@ -12,3 +12,18 @@ def db_query(db_model, db_col, search_term):
 
 def gen_result_dictionary(**kwargs):
     return kwargs
+
+def get_dict_from_object(
+        sqlalchemy_object, 
+        to_exclude = ['sa_instance_state']
+):
+    db_dict = sqlalchemy_object.__dict__
+    new_dict = {
+        key: db_dict[key] for key in db_dict.keys() if key not in to_exclude
+    }
+    return new_dict
+
+def get_dicts(query):
+    return [
+        get_dict_from_object(obj) for object in query
+    ]

@@ -6,7 +6,9 @@ function Overview(props) {
             <Card>
                 <Card.Body>
                     <AccountInformation
-                    setRoute={props.setRoute}/>
+                    setRoute={props.setRoute}
+                    accDetails={props.accDetails}
+                    setAccDetails={props.setAccDetails}/>
                     <TransactionTable/>
                 </Card.Body>
             </Card>
@@ -15,6 +17,7 @@ function Overview(props) {
 }
 
 function AccountInformation(props) {
+    let accInfo = props.accDetails
     return (
         <Card>
             <Card.Body>
@@ -34,9 +37,9 @@ function AccountInformation(props) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{accInfo.username}</td>
+                            <td>{accInfo.accountNumber}</td>
+                            <td>{accInfo.balance}</td>
                         </tr>
                     </tbody>
                 </ Table>

@@ -10,29 +10,29 @@ def add_tx_to_db(
         username,
         txDetails
 ):
-    to_account, amount, currency = txDetails.values()
-    amount = int(amount)
+    txToAccount, txAmount, txCurrency = txDetails.values()
+    txAmount = int(txAmount)
     
     user_sender = db_query(
         User, 'username', username
     )[1]
 
     user_receiver = db_query(
-        User, 'username', to_account
+        User, 'username', txToAccount
     )[1]
 
     today = datetime.strftime(datetime.today(), '%m %d %Y')
 
     tx = Transaction(
         from_account = user_sender.account_number,
-        to_account = to_account.account_number,
-        amount = amount,
-        currency = currency,
+        to_account = user_receiver.account_number,
+        amount = txAmount,
+        currency = txCurrency,
         date = today
     )
 
-    user_sender.balance -= amount
-    user_receiver.balance += amount
+    user_sender.balance -= txAmount
+    user_receiver.balance += txAmount
 
     db.session.add_all(
         [
@@ -44,9 +44,9 @@ def add_tx_to_db(
     db.session.commit()
 
 def transaction_validator(username, txDetails):
-    to_account, amount, currency = txDetails.values()
+    txToAccount, txAmount, txCurrency = txDetails.values()
     try:
-        amount = int(amount)
+        txAmount = int(txAmount)
     except:
         return False, f"Invalid Amount"
     user_sender = db_query(
@@ -54,18 +54,18 @@ def transaction_validator(username, txDetails):
     )[1]
 
     user_receiver = db_query(
-        User, 'username', to_account
+        User, 'username', txToAccount
     )[1]
     if user_receiver == None:
         return False, "Account does not exist."
-    elif to_account == user_sender.account_number:
+    elif txToAccount == user_sender.account_number:
         return False, "Receiving account cannot be the same as sending account."
-    if amount == '' or int(amount) == 0:
+    if txAmount == '' or int(txAmount) == 0:
         return False, "Amount must be greater than 0."
-    elif amount > user_sender.balance:
+    elif txAmount > user_sender.balance:
         return False, "Insufficient Funds."
-    elif currency != 'EUR' and currency != 'USD':
-        return False, "Currency in {} not supported.".format(currency)
+    elif txCurrency != 'EUR' and txCurrency != 'USD':
+        return False, "Currency in {} not supported.".format(txCurrency)
     else:
         return True, "Transaction Sent."
     
@@ -78,6 +78,18 @@ def get_overview(user):
         )
     )
 
+def fetch_transactions(account_number):
+    tx_query = Transaction.query.filter_by(
+        to_account = account_number
+    ).union(
+        Transaction.query.filter_by(
+            from_account = account_number
+        )
+    ).order_by(
+        Transaction.id.desc()
+    )
+
+
 @app.route('/')
 def main():
     return (
@@ -88,15 +100,12 @@ def main():
 
 @app.route('/send_transaction', methods = {'GET', 'POST'})
 def send_transaction():
-    print(request)
     message = request.get_json()
-    print(message)
     username, txDetails = message.values()
     validated, validation_msg = transaction_validator(
         username, txDetails
     )
     if validated:
-        print("VALIDATED")
         add_tx_to_db(
             username, txDetails
         )
@@ -104,5 +113,4 @@ def send_transaction():
         result = validated,
         message = validation_msg
     )
-    print(result)
     return result
