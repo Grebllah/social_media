@@ -29,7 +29,7 @@ class User (db.Model):
             self.balance
 
         suffix = elongate_account_number(idx)
-        self.account_number = "NL01AAZB" + suffix
+        self.account_number = "USA01BOJ" + suffix
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

@@ -24,9 +24,16 @@ function App() {
   })
 
   const [accDetails, setAccDetails] = useState({
+    email: '',
     username: '',
     accountNumber: '',
     balance: 0
+  })
+
+  const [txTable, setTxTable] = useState({
+    exists: false,
+    txs: [],
+    page: 0
   })
 
   const onRouteChange = (dest) => {
@@ -46,7 +53,6 @@ function App() {
       })
     }
     let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
-    console.log(response)
     let message = response['message']
     alert(message)
   }
@@ -68,9 +74,12 @@ function App() {
     ).json()
     let {success, message, result} = response
     alert(message)
-    if (success)
+    if (success) {
       setRoute("overview")
-    setAccDetails(result["account_details"])
+      setAccDetails(result["account_details"])
+      setTxTable(result["tx_table"])
+    }
+      
   }
 
   return (
@@ -78,7 +87,12 @@ function App() {
       <Navigation
       onRouteChange={onRouteChange}
       loginDetails={loginDetails}
-      setLoginDetails={setLoginDetails}/>
+      setLoginDetails={setLoginDetails}
+      accDetails={accDetails}
+      setAccDetails={setAccDetails}
+      setTxDetails={setTxDetails}
+      txTable={txTable}
+      />
       <h1>The Bank</h1>
       {route === 'overview'
       ?
@@ -87,6 +101,7 @@ function App() {
         setRoute={setRoute}
         accDetails={accDetails}
         setAccDetails={setAccDetails}
+        txTable={txTable}
         />
 
       : route === 'transfer'
@@ -94,6 +109,7 @@ function App() {
         <TransferPage
           onRouteChange={onRouteChange}
           sendTransaction={sendTransaction}
+          accDetails={accDetails}
           txDetails={txDetails}
           loginDetails={loginDetails}
           setTxDetails={setTxDetails}

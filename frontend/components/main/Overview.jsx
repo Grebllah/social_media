@@ -8,8 +8,11 @@ function Overview(props) {
                     <AccountInformation
                     setRoute={props.setRoute}
                     accDetails={props.accDetails}
-                    setAccDetails={props.setAccDetails}/>
-                    <TransactionTable/>
+                    setAccDetails={props.setAccDetails}
+                    />
+                    <TransactionTable
+                    txTable={props.txTable}
+                    />
                 </Card.Body>
             </Card>
         </>
@@ -51,6 +54,7 @@ function AccountInformation(props) {
 }
 
 function TransactionTable(props) {
+    let txTable = props.txTable
     return (
         <>
             <Card>
@@ -67,14 +71,25 @@ function TransactionTable(props) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            {txTable.tx_exists
+                            ?  
+                                txTable.txs.map((tx) => (
+                                <tr>
+                                    <td>{tx.id}</td>
+                                    <td>{tx.from_account}</td>
+                                    <td>{tx.to_account}</td>
+                                    <td>{tx.amount}</td>
+                                    <td>{tx.currency}</td>
+                                    <td>{tx.date}</td>
+                                </tr>
+                                ))
+                            :
+                                <tr>
+                                    <td>
+                                        <p className="center-text">No transactions found!</p>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </Table>
                 </Card.Body>

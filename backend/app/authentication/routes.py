@@ -4,7 +4,7 @@ from app.authentication.models import User
 from app.main.routes import get_overview
 from config import Config
 
-from flask import request
+from flask import request, redirect
 
 def get_idx():
     return len(
@@ -29,12 +29,23 @@ def add_user_to_db(username, email, password):
     db.session.commit()
     return new_user
 
+def clear_data():
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        db.session.execute(table.delete())
+    db.session.commit()
+
 @app.route('/register', methods = ["GET", "POST"])
 def register():
     message = request.get_json()['loginDetails']
     email, username, password = message.values()
     email_exists = db_query(User, 'email', email)[0]
     user_exists = db_query(User, 'username', username)[0]
+    if email == '' or username == '' or password == '':
+        return gen_result_dictionary(
+            success = False,
+            message = "Please ensure no spaces are left blank."
+        )
     if email_exists:
         return gen_result_dictionary(
             success = False,
@@ -78,3 +89,8 @@ def login():
             success = False,
             message = "Account as written does not exist."
         )
+    
+@app.route('/clear')
+def clear():
+    clear_data()
+    return redirect('/')

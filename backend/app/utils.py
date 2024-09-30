@@ -15,7 +15,7 @@ def gen_result_dictionary(**kwargs):
 
 def get_dict_from_object(
         sqlalchemy_object, 
-        to_exclude = ['sa_instance_state']
+        to_exclude = ['_sa_instance_state']
 ):
     db_dict = sqlalchemy_object.__dict__
     new_dict = {
@@ -25,5 +25,5 @@ def get_dict_from_object(
 
 def get_dicts(query):
     return [
-        get_dict_from_object(obj) for object in query
+        get_dict_from_object(object) for object in query
     ]
