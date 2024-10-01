@@ -12,6 +12,8 @@ function Overview(props) {
                     />
                     <TransactionTable
                     txTable={props.txTable}
+                    getOverviewRoute={props.getOverviewRoute}
+                    onNavigatePagination={props.onNavigatePagination}
                     />
                 </Card.Body>
             </Card>
@@ -73,7 +75,7 @@ function TransactionTable(props) {
                         <tbody>
                             {txTable.tx_exists
                             ?  
-                                txTable.txs.map((tx) => (
+                                txTable.txs[txTable.page].txs_on_page.map((tx) => (
                                 <tr>
                                     <td>{tx.id}</td>
                                     <td>{tx.from_account}</td>
@@ -92,10 +94,43 @@ function TransactionTable(props) {
                             }
                         </tbody>
                     </Table>
+                    {txTable['tx_exists']
+                    ?
+                        <PaginationButtons
+                        onNavigatePagination={props.onNavigatePagination}
+                        txTable={props.txTable}
+                        />
+                    :
+                        null
+                    }
                 </Card.Body>
             </Card>
         </>
     )
 }
 
+function PaginationButtons(props){
+    let txTable = props.txTable
+
+    return (
+        <>
+        {txTable.txs[txTable.page]['has_prev']
+        ?
+            <Button
+            onClick={()=>{props.onNavigatePagination('Previous')}}
+            >Prev</Button>
+        :
+            null
+        }
+        {txTable.txs[txTable.page]['has_next']
+        ?
+            <Button
+            onClick={()=>{props.onNavigatePagination('Next')}}
+            >Next</Button>
+        :
+            null
+        }
+        </>
+    )
+}
 export default Overview

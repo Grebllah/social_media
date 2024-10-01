@@ -2,6 +2,7 @@ from app import app
 from app.utils import *
 from app.main.models import *
 from app.authentication.models import *
+from config import Config
 
 from datetime import datetime
 from flask import request
@@ -72,18 +73,20 @@ def transaction_validator(username, txDetails):
         return True, "Transaction Sent."
     
 def get_overview(user):
-    tx_exists, txs = fetch_transactions(user.account_number)
-    return gen_result_dictionary(
-        account_details = gen_result_dictionary(
-            username = user.username,
-            accountNumber = user.account_number,
-            balance = user.balance
-        ),
-        tx_table = gen_result_dictionary(
-            tx_exists = tx_exists,
-            txs = txs
+    if user:
+        tx_exists, txs = fetch_transactions(user.account_number)
+        return gen_result_dictionary(
+            account_details = gen_result_dictionary(
+                username = user.username,
+                accountNumber = user.account_number,
+                balance = user.balance
+            ),
+            tx_table = gen_result_dictionary(
+                tx_exists = tx_exists,
+                txs = txs,
+                page = 0
+            )
         )
-    )
 
 def fetch_transactions(account_number):
     tx_query = Transaction.query.filter_by(
@@ -99,8 +102,37 @@ def fetch_transactions(account_number):
     if len(raw_txs) == 0:
         return False, []
     else:
-        txs = get_dicts(raw_txs)
-        return True, txs
+        paginated_txs = get_pagination_object(tx_query)
+        return True, paginated_txs
+
+def generate_pagination_dict(
+        has_prev, txs_on_page, has_next
+):
+    return {
+        "has_prev": has_prev,
+        "txs_on_page": txs_on_page,
+        "has_next": has_next
+    }
+
+def get_pagination_object(sqlalchemy_obj):
+    paginates = []
+    num_pages = sqlalchemy_obj.paginate(
+        page = 1,
+        per_page = Config.TXS_PER_PAGE
+    ).pages
+    for page_num in range(1, num_pages + 1):
+        page = sqlalchemy_obj.paginate(
+            page = page_num,
+            per_page = Config.TXS_PER_PAGE
+        )
+        paginate = generate_pagination_dict(
+            page.has_prev,
+            [get_dict_from_object(tx) for tx in page.items],
+            page.has_next
+        )
+        paginates.append(paginate)
+    return paginates
+    
 
 @app.route('/')
 def main():
@@ -126,3 +158,14 @@ def send_transaction():
         message = validation_msg
     )
     return result
+
+@app.route('/get_overview_route', methods = {'GET', 'POST'})
+def get_overview_route():
+    message = request.get_json()['loginDetails']
+    _, username, _ = message.values()
+    user = db_query(User, 'username', username)[1]
+    result = get_overview(user)
+    return gen_result_dictionary(
+        success = True,
+        result = result
+    )

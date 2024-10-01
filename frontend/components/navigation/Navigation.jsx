@@ -5,7 +5,7 @@ function Navigation(props) {
         <>
             <Navbar fixed="top" className="justify-content-end">
                 <Button onClick={()=>{props.onRouteChange('authentication')}}>Login</Button>
-                <Button onClick={()=>{props.onRouteChange('overview')}}> Overview</Button>
+                <Button onClick={props.getOverviewRoute}> Overview</Button>
                 <Button onClick={()=>{
                     props.onRouteChange('authentication')
                     props.setLoginDetails({

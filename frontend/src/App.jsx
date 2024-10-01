@@ -55,6 +55,7 @@ function App() {
     let response = await(await fetch('http://127.0.0.1:5555/send_transaction', requestOptions)).json()
     let message = response['message']
     alert(message)
+    getOverviewRoute()
   }
 
   const onAuthentication = async(route)=>{
@@ -78,8 +79,45 @@ function App() {
       setRoute("overview")
       setAccDetails(result["account_details"])
       setTxTable(result["tx_table"])
+    } 
+  }
+
+  const getOverviewRoute = async() => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-type' : "application/json"
+      },
+      body: JSON.stringify({
+          loginDetails: loginDetails
+      })
     }
-      
+    let response = await (
+      await fetch(
+      'http://127.0.0.1:5555/get_overview_route',
+      requestOptions)
+    ).json()
+    let {success, result} = response
+    if (success) {
+      setRoute("overview")
+      setAccDetails(result["account_details"])
+      setTxTable(result["tx_table"])
+    } 
+  }
+
+  const onNavigatePagination = (value) => {
+    let page = txTable.page
+    if (value == "Next") {
+      setTxTable({
+        ...txTable,
+        page: page + 1
+      })
+    } else {
+      setTxTable({
+        ...txTable,
+        page: page - 1
+      })
+    }
   }
 
   return (
@@ -92,6 +130,7 @@ function App() {
       setAccDetails={setAccDetails}
       setTxDetails={setTxDetails}
       txTable={txTable}
+      getOverviewRoute={getOverviewRoute}
       />
       <h1>The Bank</h1>
       {route === 'overview'
@@ -102,6 +141,8 @@ function App() {
         accDetails={accDetails}
         setAccDetails={setAccDetails}
         txTable={txTable}
+        getOverviewRoute={getOverviewRoute}
+        onNavigatePagination={onNavigatePagination}
         />
 
       : route === 'transfer'
