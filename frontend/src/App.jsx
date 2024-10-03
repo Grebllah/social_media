@@ -3,13 +3,14 @@ import './App.css'
 import Overview from '../components/main/Overview'
 import TransferPage from '../components/main/TransferPage'
 import Navigation from '../components/navigation/Navigation'
+import Welcome from '../components/main/Welcome'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Authentication from '../components/authentication/Authentication'
 
 
 function App() {
   
-  const [route, setRoute] = useState('authentication')
+  const [route, setRoute] = useState('welcome')
     
   const [txDetails, setTxDetails] = useState({
     txToAccount: '',
@@ -133,7 +134,11 @@ function App() {
       getOverviewRoute={getOverviewRoute}
       />
       <h1>The Bank</h1>
-      {route === 'overview'
+      {route=== 'welcome'
+      ?
+        <Welcome/>
+      
+      :route === 'overview'
       ?
         <Overview
         onRouteChange={onRouteChange}
