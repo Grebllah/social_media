@@ -53,7 +53,7 @@ function Login(props) {
                         type="password"
                         onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["password"]: e.target.value})}}
                         ></Form.Control>
-                        <Button variant='secondary' id='showButton'>Show Password</Button>
+                        {/* <Button variant='secondary' id='showButton'>Show Password</Button> */}
                     </Form.Group>
                     <Button onClick={()=>{props.onAuthentication('login')}}>Login</Button>
                     <Button onClick={()=>{props.setAuthRoute('register')}}>Register New Account</Button>
@@ -88,7 +88,7 @@ function Register(props) {
                         type="password"
                         onChange={(e)=>{props.setLoginDetails({...props.loginDetails, ["password"]: e.target.value})}}
                         ></Form.Control>
-                        <Button variant='secondary' id='showButton'>Show Password</Button>
+                        {/* <Button variant='secondary' id='showButton'>Show Password</Button> */}
                     </Form.Group>
                     <Button onClick={()=>{props.setAuthRoute('login')}}>Cancel</Button>
                     <Button onClick={()=>{props.onAuthentication('register')}}>Create Account</Button>
